@@ -27,7 +27,7 @@ export class Tool3d extends Component {
     this.upper
       .css('webkitTransition', 'all .3s ease-in-out')
       // .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
-      .y(300)
+      .y(270)
       .update();
     setTimeout(this.goUp, 300);
   };
@@ -44,53 +44,105 @@ export class Tool3d extends Component {
     //
     // this.stage.appendChild(this.upper);
 
-    let stage = Sprite3D.stage(this.area);
-    this.upper = stage.addChild(
+    this.stage = Sprite3D.stage(this.area);
+    this.upper = this.stage.addChild(
       new Sprite3D()
         .position(150, 160)
         .z(-400)
-        // .rotation(20, 30, 0)
+        .y(0)
+        .rotation(-10, 60, 0)
         .update()
     );
     // create the box faces
     this.upper.addChild(
       new Sprite3D()
-        .className('face')
-        .position(-80, -80, 80)
+        .className('shortface')
+        .position(-130, -80, 130)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
-        .className('face')
-        .position(-80, -80, -80)
+        .className('shortface')
+        .position(-130, -80, -130)
         .rotationY(180)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
-        .className('face')
-        .position(-160, -80, 0)
+        .className('wideface')
+        .position(-260, -80, 0)
         .rotationY(-90)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
-        .className('face')
-        .position(0, -80, 0)
+        .className('wideface')
+        .position(-130, -80, 0)
         .rotationY(90)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
         .className('top')
-        .position(-80, 0, 0)
+        .position(-130, -160, 0)
         .rotationX(90)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
+        .className('bottom')
+        .position(-130, -210, 0)
+        .rotationX(-90)
+        .update()
+    );
+
+    this.lower = this.stage.addChild(
+      new Sprite3D()
+        .position(150, 160)
+        .z(-400)
+        .y(0)
+        .rotation(-10, 60, 0)
+        .update()
+    );
+    // create the box faces
+    this.lower.addChild(
+      new Sprite3D()
+        .className('shortface')
+        .position(-130, 250, 130)
+        .update()
+    );
+    this.lower.addChild(
+      new Sprite3D()
+        .className('shortface')
+        .position(-130, 250, -130)
+        .rotationY(180)
+        .update()
+    );
+    this.lower.addChild(
+      new Sprite3D()
+        .className('wideface')
+        .position(-260, 250, 0)
+        .rotationY(-90)
+        .update()
+    );
+    this.lower.addChild(
+      new Sprite3D()
+        .className('wideface')
+        .position(-130, 250, 0)
+        .rotationY(90)
+        .update()
+    );
+    this.lower.addChild(
+      new Sprite3D()
         .className('top')
-        .position(-80, -160, 0)
+        .position(-130, 170, 0)
+        .rotationX(90)
+        .update()
+    );
+    this.lower.addChild(
+      new Sprite3D()
+        .className('bottom')
+        .position(-130, 120, 0)
         .rotationX(-90)
         .update()
     );

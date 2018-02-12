@@ -1,0 +1,14 @@
+{
+  "name": "css3d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd test; npm start"
+  },
+  "author": "Esbjörn Blomquist",
+  "license": "MIT",
+  "dependencies": {
+    "snabbt.js": "^0.6.4"
+  }
+}

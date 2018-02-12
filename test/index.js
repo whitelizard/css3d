@@ -56,6 +56,8 @@ export class Tool3d extends Component {
     // create the box faces
     this.upper.addChild(
       new Sprite3D()
+        .css('width', '130px')
+        .css('height', '50px')
         .className('shortface')
         .position(-130, -80, 130)
         .update()
@@ -63,6 +65,8 @@ export class Tool3d extends Component {
     this.upper.addChild(
       new Sprite3D()
         .className('shortface')
+        .css('width', '130px')
+        .css('height', '50px')
         .position(-130, -80, -130)
         .rotationY(180)
         .update()
@@ -83,14 +87,14 @@ export class Tool3d extends Component {
     );
     this.upper.addChild(
       new Sprite3D()
-        .className('top')
+        .className('bottom')
         .position(-130, -160, 0)
         .rotationX(90)
         .update()
     );
     this.upper.addChild(
       new Sprite3D()
-        .className('bottom')
+        .className('top')
         .position(-130, -210, 0)
         .rotationX(-90)
         .update()
@@ -108,12 +112,16 @@ export class Tool3d extends Component {
     this.lower.addChild(
       new Sprite3D()
         .className('shortface')
+        .css('width', '130px')
+        .css('height', '50px')
         .position(-130, 250, 130)
         .update()
     );
     this.lower.addChild(
       new Sprite3D()
         .className('shortface')
+        .css('width', '130px')
+        .css('height', '50px')
         .position(-130, 250, -130)
         .rotationY(180)
         .update()
@@ -134,14 +142,14 @@ export class Tool3d extends Component {
     );
     this.lower.addChild(
       new Sprite3D()
-        .className('top')
+        .className('bottom')
         .position(-130, 170, 0)
         .rotationX(90)
         .update()
     );
     this.lower.addChild(
       new Sprite3D()
-        .className('bottom')
+        .className('top')
         .position(-130, 120, 0)
         .rotationX(-90)
         .update()

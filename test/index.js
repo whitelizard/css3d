@@ -12,7 +12,7 @@ function colProc(rgb, proc, noStr) {
   const newCol = [
     Math.min((rgb[0] * (100 + proc) / 100).toFixed(0), 255),
     Math.min((rgb[1] * (100 + proc) / 100).toFixed(0), 255),
-    Math.min((rgb[2] * (100 + proc) / 100).toFixed(0), 255)
+    Math.min((rgb[2] * (100 + proc) / 100).toFixed(0), 255),
   ];
   if (rgb.length === 4) newCol.push(rgb[3]);
   if (noStr) return newCol;
@@ -50,7 +50,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('background', fCol)
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2, dz / 2)
-      .update()
+      .update(),
   );
   box.addChild(
     new Sprite3D()
@@ -61,7 +61,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2, -dz / 2)
       .rotationY(180)
-      .update()
+      .update(),
   );
   box.addChild(
     new Sprite3D()
@@ -72,7 +72,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('border', `1px solid ${boCol}`)
       .position(-dz / 2 + dx / 2, -dy / 2, 0)
       .rotationY(-90)
-      .update()
+      .update(),
   );
   box.addChild(
     new Sprite3D()
@@ -83,7 +83,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('border', `1px solid ${boCol}`)
       .position(-dz / 2 - dx / 2, -dy / 2, 0)
       .rotationY(90)
-      .update()
+      .update(),
   );
   box.addChild(
     new Sprite3D()
@@ -94,7 +94,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2 - dz / 2, 0)
       .rotationX(-90)
-      .update()
+      .update(),
   );
   box.addChild(
     new Sprite3D()
@@ -105,7 +105,7 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, dy / 2 - dz / 2, 0)
       .rotationX(90)
-      .update()
+      .update(),
   );
   return box;
 }
@@ -120,34 +120,42 @@ export class Tool3d extends Component {
   goDown = () => {
     this.upper
       .css('webkitTransition', 'all .3s ease-in-out')
-      // .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
-      .y(220)
+      .y(180)
+      .update();
+    this.upper2
+      .css('webkitTransition', 'all .3s ease-in-out')
+      .y(210)
       .update();
     setTimeout(this.goUp, 300);
   };
   goUp = () => {
     this.upper
       .css('webkitTransition', 'all .3s ease-in-out')
-      // .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
       .y(-20)
+      .update();
+    this.upper2
+      .css('webkitTransition', 'all .3s ease-in-out')
+      .y(10)
       .update();
   };
   componentDidMount() {
     this.stage = Sprite3D.stage(this.area);
-    this.upper = spriteBox(
-      [320, 50, 160],
-      [140, -20, -300],
-      [-12, -30, 0],
-      'upper'
-    );
+    this.upper = spriteBox([320, 30, 160], [140, -20, -300], [-12, -30, 0], 'upper');
+    this.upper2 = spriteBox([300, 30, 140], [140, 10, -300], [-12, -30, 0], 'upper2', [
+      120,
+      120,
+      140,
+    ]);
     this.stage.addChild(this.upper);
-    this.lower = spriteBox(
-      [320, 50, 160],
-      [140, 270, -300],
-      [-12, -30, 0],
-      'lower'
-    );
+    this.stage.addChild(this.upper2);
+    this.lower = spriteBox([320, 30, 160], [140, 270, -300], [-12, -30, 0], 'lower');
+    this.lower2 = spriteBox([300, 30, 140], [140, 240, -300], [-12, -30, 0], 'lower2', [
+      120,
+      120,
+      140,
+    ]);
     this.stage.addChild(this.lower);
+    this.stage.addChild(this.lower2);
     // this.stage.rotationY(70).update();
   }
   shouldComponentUpdate({ pressed, cycle }) {
@@ -169,12 +177,7 @@ export class Tool3d extends Component {
     }
   }
   render(props, { running }) {
-    return (
-      <div
-        ref={c => (this.area = c)}
-        style={{ width: sceneWidth, height: sceneHeight }}
-      />
-    );
+    return <div ref={c => (this.area = c)} style={{ width: sceneWidth, height: sceneHeight }} />;
   }
 }
 

@@ -8,12 +8,106 @@ import Sprite3D from './sprite3d';
 const sceneWidth = 300;
 const sceneHeight = 320;
 
-// move alone
-function moveAgain(event) {
-  this.css('webkitTransition', 'all ' + (Math.random() + 0.3) + 's ease-in-out')
-    .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
-    .y(Math.random() * -800)
+function colProc(rgb, proc, noStr) {
+  const newCol = [
+    Math.min((rgb[0] * (100 + proc) / 100).toFixed(0), 255),
+    Math.min((rgb[1] * (100 + proc) / 100).toFixed(0), 255),
+    Math.min((rgb[2] * (100 + proc) / 100).toFixed(0), 255)
+  ];
+  if (rgb.length === 4) newCol.push(rgb[3]);
+  if (noStr) return newCol;
+  return `rgba(${newCol[0]}, ${newCol[1]}, ${newCol[2]}, ${newCol[3] || 1})`;
+}
+
+function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
+  const [dx, dy, dz] = dim || [0, 0, 0];
+  const [px, py, pz] = pos || [0, 0, 0];
+  const [rx, ry, rz] = rot || [0, 0, 0];
+  const box = new Sprite3D()
+    .className(name)
+    // .rotationX(rx)
+    // .rotationY(ry)
+    // .rotationZ(rz)
+    .rotation(rx, ry, rz)
+    .x(px)
+    .y(py)
+    .z(pz)
     .update();
+  // create the box faces
+  const boCol = colProc(rgba, -20);
+  const fCol = colProc(rgba, 25);
+  const baCol = colProc(rgba, -20);
+  const rCol = colProc(rgba, 10);
+  const lCol = colProc(rgba, 5);
+  const tCol = colProc(rgba, 45);
+  const bCol = colProc(rgba, -45);
+  console.log(rCol);
+  box.addChild(
+    new Sprite3D()
+      .className('face frontface')
+      .css('width', `${dx}px`)
+      .css('height', `${dy}px`)
+      .css('background', fCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dx / 2, -dy / 2, dz / 2)
+      .update()
+  );
+  box.addChild(
+    new Sprite3D()
+      .className('face backface')
+      .css('width', `${dx}px`)
+      .css('height', `${dy}px`)
+      .css('background', baCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dx / 2, -dy / 2, -dz / 2)
+      .rotationY(180)
+      .update()
+  );
+  box.addChild(
+    new Sprite3D()
+      .className('face rightface')
+      .css('width', `${dz}px`)
+      .css('height', `${dy}px`)
+      .css('background', rCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dz / 2 + dx / 2, -dy / 2, 0)
+      .rotationY(-90)
+      .update()
+  );
+  box.addChild(
+    new Sprite3D()
+      .className('face leftface')
+      .css('width', `${dz}px`)
+      .css('height', `${dy}px`)
+      .css('background', lCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dz / 2 - dx / 2, -dy / 2, 0)
+      .rotationY(90)
+      .update()
+  );
+  box.addChild(
+    new Sprite3D()
+      .className('face topface')
+      .css('width', `${dx}px`)
+      .css('height', `${dz}px`)
+      .css('background', tCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dx / 2, -dy / 2 - dz / 2, 0)
+      .rotationX(-90)
+      .update()
+  );
+  box.addChild(
+    new Sprite3D()
+      .className('face bottomface')
+      .css('width', `${dx}px`)
+      .css('height', `${dz}px`)
+      .css('background', bCol)
+      .css('border', `1px solid ${boCol}`)
+      .position(-dx / 2, dy / 2 - dz / 2, 0)
+      .rotationX(90)
+      .update()
+  );
+  return box;
 }
 
 export class Tool3d extends Component {
@@ -27,7 +121,7 @@ export class Tool3d extends Component {
     this.upper
       .css('webkitTransition', 'all .3s ease-in-out')
       // .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
-      .y(270)
+      .y(220)
       .update();
     setTimeout(this.goUp, 300);
   };
@@ -35,127 +129,26 @@ export class Tool3d extends Component {
     this.upper
       .css('webkitTransition', 'all .3s ease-in-out')
       // .rotation((Math.random() - 0.5) * -150, (Math.random() - 0.5) * 150, 0)
-      .y(0)
+      .y(-20)
       .update();
   };
   componentDidMount() {
-    // this.stage = Sprite3D.stage();
-    // this.upper = Sprite3D.box(100, 100, 100, '.cube');
-    //
-    // this.stage.appendChild(this.upper);
-
     this.stage = Sprite3D.stage(this.area);
-    this.upper = this.stage.addChild(
-      new Sprite3D()
-        .position(150, 160)
-        .z(-400)
-        .y(0)
-        .rotation(-10, 60, 0)
-        .update()
+    this.upper = spriteBox(
+      [320, 50, 160],
+      [140, -20, -300],
+      [-12, -30, 0],
+      'upper'
     );
-    // create the box faces
-    this.upper.addChild(
-      new Sprite3D()
-        .css('width', '130px')
-        .css('height', '50px')
-        .className('shortface')
-        .position(-130, -80, 130)
-        .update()
+    this.stage.addChild(this.upper);
+    this.lower = spriteBox(
+      [320, 50, 160],
+      [140, 270, -300],
+      [-12, -30, 0],
+      'lower'
     );
-    this.upper.addChild(
-      new Sprite3D()
-        .className('shortface')
-        .css('width', '130px')
-        .css('height', '50px')
-        .position(-130, -80, -130)
-        .rotationY(180)
-        .update()
-    );
-    this.upper.addChild(
-      new Sprite3D()
-        .className('wideface')
-        .position(-260, -80, 0)
-        .rotationY(-90)
-        .update()
-    );
-    this.upper.addChild(
-      new Sprite3D()
-        .className('wideface')
-        .position(-130, -80, 0)
-        .rotationY(90)
-        .update()
-    );
-    this.upper.addChild(
-      new Sprite3D()
-        .className('bottom')
-        .position(-130, -160, 0)
-        .rotationX(90)
-        .update()
-    );
-    this.upper.addChild(
-      new Sprite3D()
-        .className('top')
-        .position(-130, -210, 0)
-        .rotationX(-90)
-        .update()
-    );
-
-    this.lower = this.stage.addChild(
-      new Sprite3D()
-        .position(150, 160)
-        .z(-400)
-        .y(0)
-        .rotation(-10, 60, 0)
-        .update()
-    );
-    // create the box faces
-    this.lower.addChild(
-      new Sprite3D()
-        .className('shortface')
-        .css('width', '130px')
-        .css('height', '50px')
-        .position(-130, 250, 130)
-        .update()
-    );
-    this.lower.addChild(
-      new Sprite3D()
-        .className('shortface')
-        .css('width', '130px')
-        .css('height', '50px')
-        .position(-130, 250, -130)
-        .rotationY(180)
-        .update()
-    );
-    this.lower.addChild(
-      new Sprite3D()
-        .className('wideface')
-        .position(-260, 250, 0)
-        .rotationY(-90)
-        .update()
-    );
-    this.lower.addChild(
-      new Sprite3D()
-        .className('wideface')
-        .position(-130, 250, 0)
-        .rotationY(90)
-        .update()
-    );
-    this.lower.addChild(
-      new Sprite3D()
-        .className('bottom')
-        .position(-130, 170, 0)
-        .rotationX(90)
-        .update()
-    );
-    this.lower.addChild(
-      new Sprite3D()
-        .className('top')
-        .position(-130, 120, 0)
-        .rotationX(-90)
-        .update()
-    );
-    // this.upper.addEventListener('webkitTransitionEnd', this.goUp);
-    // setInterval(moveAgain.bind(upper), 1000);
+    this.stage.addChild(this.lower);
+    // this.stage.rotationY(70).update();
   }
   shouldComponentUpdate({ pressed, cycle }) {
     const { running } = this.state;
@@ -202,6 +195,10 @@ export default class App extends Component {
     setInterval(this.updatePressure, 230);
   }
   render({}, { pressure }) {
-    return <Tool3d pressed={pressure > 200} />;
+    return (
+      <div style="padding: 0px">
+        <Tool3d pressed={pressure > 200} />
+      </div>
+    );
   }
 }

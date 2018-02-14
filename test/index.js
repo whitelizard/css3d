@@ -1,4 +1,4 @@
-import './style';
+// import './style';
 import { Component } from 'preact';
 // import * as Sprite3D from './sprite3d';
 import Sprite3D from './sprite3d';
@@ -12,7 +12,7 @@ function colProc(rgb, proc, noStr) {
   const newCol = [
     Math.min((rgb[0] * (100 + proc) / 100).toFixed(0), 255),
     Math.min((rgb[1] * (100 + proc) / 100).toFixed(0), 255),
-    Math.min((rgb[2] * (100 + proc) / 100).toFixed(0), 255),
+    Math.min((rgb[2] * (100 + proc) / 100).toFixed(0), 255)
   ];
   if (rgb.length === 4) newCol.push(rgb[3]);
   if (noStr) return newCol;
@@ -26,7 +26,7 @@ function spriteBox({
   name = 'box',
   rgba = [90, 90, 110, 0.95],
   borderOffset = -20,
-  colorDiffFactor = 1,
+  colorDiffFactor = 1
 }) {
   const [dx, dy, dz] = dim;
   const [px, py, pz] = pos;
@@ -58,7 +58,7 @@ function spriteBox({
       .css('background', fCol)
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2, dz / 2)
-      .update(),
+      .update()
   );
   box.addChild(
     new Sprite3D()
@@ -69,7 +69,7 @@ function spriteBox({
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2, -dz / 2)
       .rotationY(180)
-      .update(),
+      .update()
   );
   box.addChild(
     new Sprite3D()
@@ -80,7 +80,7 @@ function spriteBox({
       .css('border', `1px solid ${boCol}`)
       .position(-dz / 2 + dx / 2, -dy / 2, 0)
       .rotationY(-90)
-      .update(),
+      .update()
   );
   box.addChild(
     new Sprite3D()
@@ -91,7 +91,7 @@ function spriteBox({
       .css('border', `1px solid ${boCol}`)
       .position(-dz / 2 - dx / 2, -dy / 2, 0)
       .rotationY(90)
-      .update(),
+      .update()
   );
   box.addChild(
     new Sprite3D()
@@ -102,7 +102,7 @@ function spriteBox({
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, -dy / 2 - dz / 2, 0)
       .rotationX(-90)
-      .update(),
+      .update()
   );
   box.addChild(
     new Sprite3D()
@@ -113,7 +113,7 @@ function spriteBox({
       .css('border', `1px solid ${boCol}`)
       .position(-dx / 2, dy / 2 - dz / 2, 0)
       .rotationX(90)
-      .update(),
+      .update()
   );
   return box;
 }
@@ -153,7 +153,7 @@ export class Tool3d extends Component {
       pos: [140, -20, -300],
       rot: [-12, -30, 0],
       name: 'upper',
-      borderOffset: 40,
+      borderOffset: 40
     });
     this.upper2 = spriteBox({
       dim: [300, 30, 140],
@@ -161,7 +161,7 @@ export class Tool3d extends Component {
       rot: [-12, -30, 0],
       name: 'upper2',
       rgba: [150, 150, 165],
-      borderOffset: 40,
+      borderOffset: 40
     });
     this.stage.addChild(this.upper);
     this.stage.addChild(this.upper2);
@@ -170,7 +170,7 @@ export class Tool3d extends Component {
       pos: [140, 270, -300],
       rot: [-12, -30, 0],
       name: 'lower',
-      borderOffset: 40,
+      borderOffset: 40
     });
     this.lower2 = spriteBox({
       dim: [300, 30, 140],
@@ -178,7 +178,7 @@ export class Tool3d extends Component {
       rot: [-12, -30, 0],
       name: 'lower2',
       rgba: [150, 150, 165],
-      borderOffset: 40,
+      borderOffset: 40
     });
     this.stage.addChild(this.lower);
     this.stage.addChild(this.lower2);
@@ -203,7 +203,12 @@ export class Tool3d extends Component {
     }
   }
   render(props, { running }) {
-    return <div ref={c => (this.area = c)} style={{ width: sceneWidth, height: sceneHeight }} />;
+    return (
+      <div
+        ref={c => (this.area = c)}
+        style={{ width: sceneWidth, height: sceneHeight }}
+      />
+    );
   }
 }
 

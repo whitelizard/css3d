@@ -19,10 +19,18 @@ function colProc(rgb, proc, noStr) {
   return `rgba(${newCol[0]}, ${newCol[1]}, ${newCol[2]}, ${newCol[3] || 1})`;
 }
 
-function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
-  const [dx, dy, dz] = dim || [0, 0, 0];
-  const [px, py, pz] = pos || [0, 0, 0];
-  const [rx, ry, rz] = rot || [0, 0, 0];
+function spriteBox({
+  dim = [100, 100, 100],
+  pos = [0, 0, 0],
+  rot = [0, 0, 0],
+  name = 'box',
+  rgba = [90, 90, 110, 0.95],
+  borderOffset = -20,
+  colorDiffFactor = 1,
+}) {
+  const [dx, dy, dz] = dim;
+  const [px, py, pz] = pos;
+  const [rx, ry, rz] = rot;
   const box = new Sprite3D()
     .className(name)
     // .rotationX(rx)
@@ -34,13 +42,13 @@ function spriteBox(dim, pos, rot, name, rgba = [90, 90, 110, 0.95]) {
     .z(pz)
     .update();
   // create the box faces
-  const boCol = colProc(rgba, -20);
-  const fCol = colProc(rgba, 25);
-  const baCol = colProc(rgba, -20);
-  const rCol = colProc(rgba, 10);
-  const lCol = colProc(rgba, 5);
-  const tCol = colProc(rgba, 45);
-  const bCol = colProc(rgba, -45);
+  const boCol = colProc(rgba, borderOffset);
+  const fCol = colProc(rgba, 25 * colorDiffFactor);
+  const baCol = colProc(rgba, -20 * colorDiffFactor);
+  const rCol = colProc(rgba, 10 * colorDiffFactor);
+  const lCol = colProc(rgba, 5 * colorDiffFactor);
+  const tCol = colProc(rgba, 45 * colorDiffFactor);
+  const bCol = colProc(rgba, -45 * colorDiffFactor);
   console.log(rCol);
   box.addChild(
     new Sprite3D()
@@ -140,20 +148,38 @@ export class Tool3d extends Component {
   };
   componentDidMount() {
     this.stage = Sprite3D.stage(this.area);
-    this.upper = spriteBox([320, 30, 160], [140, -20, -300], [-12, -30, 0], 'upper');
-    this.upper2 = spriteBox([300, 30, 140], [140, 10, -300], [-12, -30, 0], 'upper2', [
-      120,
-      120,
-      140,
-    ]);
+    this.upper = spriteBox({
+      dim: [320, 30, 160],
+      pos: [140, -20, -300],
+      rot: [-12, -30, 0],
+      name: 'upper',
+      borderOffset: 40,
+    });
+    this.upper2 = spriteBox({
+      dim: [300, 30, 140],
+      pos: [140, 10, -300],
+      rot: [-12, -30, 0],
+      name: 'upper2',
+      rgba: [150, 150, 165],
+      borderOffset: 40,
+    });
     this.stage.addChild(this.upper);
     this.stage.addChild(this.upper2);
-    this.lower = spriteBox([320, 30, 160], [140, 270, -300], [-12, -30, 0], 'lower');
-    this.lower2 = spriteBox([300, 30, 140], [140, 240, -300], [-12, -30, 0], 'lower2', [
-      120,
-      120,
-      140,
-    ]);
+    this.lower = spriteBox({
+      dim: [320, 30, 160],
+      pos: [140, 270, -300],
+      rot: [-12, -30, 0],
+      name: 'lower',
+      borderOffset: 40,
+    });
+    this.lower2 = spriteBox({
+      dim: [300, 30, 140],
+      pos: [140, 240, -300],
+      rot: [-12, -30, 0],
+      name: 'lower2',
+      rgba: [150, 150, 165],
+      borderOffset: 40,
+    });
     this.stage.addChild(this.lower);
     this.stage.addChild(this.lower2);
     // this.stage.rotationY(70).update();

@@ -12,20 +12,12 @@ const sceneHeight = 320;
 const uPos = 130;
 
 export class World3d extends Component {
-  state = { running: false, cycle: false };
-  stopping;
-  goingDown;
-  freq = 1000;
-  lastPressTime = 0;
-  stop = () => this.setState({ running: false });
   goDown = () => {
-    this.upper.y(180).update();
-    this.upper2.y(210).update();
-    setTimeout(this.goUp, 300);
+    this.upper.forEach(b => b.y(uPos + 130).update());
+    setTimeout(this.goUp, 200);
   };
   goUp = () => {
-    this.upper.y(-20).update();
-    this.upper2.y(10).update();
+    this.upper.forEach(b => b.y(uPos).update());
   };
   componentDidMount() {
     this.stage = Sprite3D.stage(this.area)
@@ -59,34 +51,15 @@ export class World3d extends Component {
         colorDiffFactor: 0.8 + (i === 4 ? 0.4 : 0),
         antiAlias: 3
       })
-        .css('transition', 'all .3s ease-in-out')
+        .css('transition', 'all .2s ease-in-out')
         .update();
       this.upper.push(box);
       this.stage.addChild(box);
     }
-    console.log(this.upper);
-    setInterval(() => {
-      this.t = !this.t;
-      console.log(this.t);
-      this.upper.forEach(b => b.y(uPos + this.t * 130).update());
-    }, 1000);
   }
   shouldComponentUpdate({ pressed }) {
-    const { running } = this.state;
-    console.log(running, pressed);
-    if (pressed) {
-      if (this.stopping) clearTimeout(this.stopping);
-      if (running) {
-        if (this.lastPressTime) {
-          this.freq = (Date.now() - this.lastPressTime + this.freq) / 2;
-        }
-      } else {
-        this.setState({ running: true });
-      }
-      this.stopping = setTimeout(this.stop, 2000);
-      this.goingDown = setTimeout(this.goDown, this.freq * 0.8);
-      this.lastPressTime = Date.now();
-    }
+    if (pressed) this.goDown();
+    return false;
   }
   render(props, { running }) {
     return (
@@ -112,7 +85,7 @@ export default class App extends Component {
     }
   };
   componentDidMount() {
-    setInterval(this.updatePressure, 230);
+    setInterval(this.updatePressure, 430);
   }
   render({}, { pressure }) {
     return (

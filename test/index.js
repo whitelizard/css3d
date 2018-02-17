@@ -3,7 +3,7 @@ import { Component } from 'preact';
 // import * as Sprite3D from './sprite3d';
 
 export class Tool3d extends Component {
-  state = { running: false, cycle: false };
+  state = { running: false };
   stopping;
   goingDown;
   halfDelay = 600;
@@ -39,7 +39,7 @@ export class Tool3d extends Component {
       'matrix3d(0.866025, 0.103956, 0.489074, 0, 0, 0.978148, -0.207912, 0, -0.5, 0.180057, 0.847101, 0, 140, 10, -300, 1)'
     );
   };
-  shouldComponentUpdate({ pressed, cycle }) {
+  shouldComponentUpdate({ pressed }) {
     const { running } = this.state;
     // const { cycle: lastCycle } = this.props;
     // console.log(running, pressed);
@@ -56,6 +56,7 @@ export class Tool3d extends Component {
       this.stopping = setTimeout(this.stop, this.halfDelay * 4);
       this.goingDown = setTimeout(this.goDown, this.halfDelay);
       this.lastPressTime = Date.now();
+      return false;
     }
   }
   render(props, { running }) {

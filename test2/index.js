@@ -14,7 +14,7 @@ const uPos = 130;
 export class World3d extends Component {
   goDown = () => {
     this.upper.forEach(b => b.y(uPos + 130).update());
-    setTimeout(this.goUp, 200);
+    // setTimeout(this.goUp, 200);
   };
   goUp = () => {
     this.upper.forEach(b => b.y(uPos).update());
@@ -59,6 +59,7 @@ export class World3d extends Component {
   }
   shouldComponentUpdate({ pressed }) {
     if (pressed) this.goDown();
+    else this.goUp();
     return false;
   }
   render(props, { running }) {

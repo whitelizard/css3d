@@ -8,7 +8,13 @@
   },
   "author": "Esbjörn Blomquist",
   "license": "MIT",
-  "dependencies": {
-    "snabbt.js": "^0.6.4"
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.17.0",
+    "eslint-config-synacor": "^3.0.0"
   }
 }

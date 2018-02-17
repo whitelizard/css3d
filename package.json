@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cd test; npm start"
+    "test": "cd test2; npm start"
   },
   "author": "Esbjörn Blomquist",
   "license": "MIT",

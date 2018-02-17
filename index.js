@@ -19,17 +19,21 @@ export function spriteBox({
   name = 'box',
   rgba = [90, 90, 110, 0.95],
   borderOffset = -20,
-  colorDiffFactor = 1
+  colorDiffFactor = 1,
+  centerPositioning = true,
+  noBorder = false,
+  antiAlias = 0
 }) {
   const [dx, dy, dz] = dim;
   const [px, py, pz] = pos;
   const [rx, ry, rz] = rot;
+  const cen = centerPositioning ? 0 : 1;
   const box = new Sprite3D()
     .className(name)
     .rotation(rx, ry, rz)
-    .x(px)
-    .y(py)
-    .z(pz)
+    .x(px + cen * (dx / 2))
+    .y(py + cen * (dy / 2))
+    .z(pz + cen * (dz / 2))
     .update();
   // create the box faces
   const boCol = colProc(rgba, borderOffset);
@@ -39,14 +43,14 @@ export function spriteBox({
   const lCol = colProc(rgba, 5 * colorDiffFactor);
   const tCol = colProc(rgba, 45 * colorDiffFactor);
   const bCol = colProc(rgba, -45 * colorDiffFactor);
-  console.log(rCol);
   box.addChild(
     new Sprite3D()
       .className('face frontface')
       .css('width', `${dx}px`)
       .css('height', `${dy}px`)
       .css('background', fCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
       .position(-dx / 2, -dy / 2, dz / 2)
       .update()
   );
@@ -56,7 +60,8 @@ export function spriteBox({
       .css('width', `${dx}px`)
       .css('height', `${dy}px`)
       .css('background', baCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
       .position(-dx / 2, -dy / 2, -dz / 2)
       .rotationY(180)
       .update()
@@ -67,7 +72,8 @@ export function spriteBox({
       .css('width', `${dz}px`)
       .css('height', `${dy}px`)
       .css('background', rCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
       .position(-dz / 2 + dx / 2, -dy / 2, 0)
       .rotationY(-90)
       .update()
@@ -78,7 +84,8 @@ export function spriteBox({
       .css('width', `${dz}px`)
       .css('height', `${dy}px`)
       .css('background', lCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
       .position(-dz / 2 - dx / 2, -dy / 2, 0)
       .rotationY(90)
       .update()
@@ -89,7 +96,8 @@ export function spriteBox({
       .css('width', `${dx}px`)
       .css('height', `${dz}px`)
       .css('background', tCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
       .position(-dx / 2, -dy / 2 - dz / 2, 0)
       .rotationX(-90)
       .update()
@@ -100,7 +108,8 @@ export function spriteBox({
       .css('width', `${dx}px`)
       .css('height', `${dz}px`)
       .css('background', bCol)
-      .css('border', `1px solid ${boCol}`)
+      .css('border', `${+!noBorder}px solid ${boCol}`)
+      .css('borderRadius', `${antiAlias}px`)
       .position(-dx / 2, dy / 2 - dz / 2, 0)
       .rotationX(90)
       .update()

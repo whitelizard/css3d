@@ -29,7 +29,8 @@ export class Tool3d extends Component {
       pos: [140, -20, -300],
       rot: [-12, -30, 0],
       name: 'upper',
-      borderOffset: 40
+      borderOffset: 40,
+      centerPositioning: true
     }).css('webkitTransition', 'all .3s ease-in-out');
     this.upper2 = spriteBox({
       dim: [300, 30, 140],
@@ -37,7 +38,8 @@ export class Tool3d extends Component {
       rot: [-12, -30, 0],
       name: 'upper2',
       rgba: [150, 150, 165],
-      borderOffset: 40
+      borderOffset: 40,
+      centerPositioning: true
     }).css('webkitTransition', 'all .3s ease-in-out');
     this.stage.addChild(this.upper);
     this.stage.addChild(this.upper2);
@@ -46,7 +48,8 @@ export class Tool3d extends Component {
       pos: [140, 270, -300],
       rot: [-12, -30, 0],
       name: 'lower',
-      borderOffset: 40
+      borderOffset: 40,
+      centerPositioning: true
     });
     this.lower2 = spriteBox({
       dim: [300, 30, 140],
@@ -54,7 +57,8 @@ export class Tool3d extends Component {
       rot: [-12, -30, 0],
       name: 'lower2',
       rgba: [150, 150, 165],
-      borderOffset: 40
+      borderOffset: 40,
+      centerPositioning: true
     });
     this.stage.addChild(this.lower);
     this.stage.addChild(this.lower2);

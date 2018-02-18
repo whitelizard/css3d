@@ -1,0 +1,22 @@
+.area {
+  width: 300px;
+  height: 320px;
+  perspective: 800px;
+  transform-style: preserve-3d;
+  border: 1px solid blue;
+}
+.box,
+.box > div {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  transform-style: preserve-3d;
+  border-radius: 8px;
+}
+.box.moving > div {
+  border-radius: 3px;
+}
+.to-move {
+  transform-style: preserve-3d;
+  transition: all 0.2s ease-in-out;
+}
